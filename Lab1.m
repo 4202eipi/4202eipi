@@ -10,7 +10,7 @@ COM_SetDefaultNXT(h);
 
 %%TARGET LOCATION STRUCT
 targetCount = 1;
-targetLocations = [1 6 1; %%x1 y1 z1
+targetLocations = [5 1 0; %%x1 y1 z1
                    3 1 0; %%x2 y2 z2
                    7 4 3] %%x3 y3 z3
 targetLocations = sortPositions(targetLocations, targetCount);
@@ -24,7 +24,7 @@ NXT_PlayTone(440, 200, h);
 pause(0.2)
 
 %%SETUP MOTORS
-power = 30;
+power = 20;
 
 mALeft = NXTMotor('A', 'Power', power);
 mBDown = NXTMotor('B', 'Power', -power);

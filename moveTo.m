@@ -9,7 +9,7 @@ function [] = moveTo(x, y, z, motors)
     alpha = 135; % pen degree constant (degrees)
 
     gr1 = 7; %gear ratio motorA:arm1
-    gr2 = 7; %gear ratio motorB:arm2
+    gr2 = 6; %gear ratio motorB:arm2
 
     N = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
     phi = asind(P*sind(alpha)/N);
@@ -33,13 +33,13 @@ function [] = moveTo(x, y, z, motors)
     
     theta2 = acosd((M^2+d^2-N^2)/(2*M*d));
     temp = theta2;
-    beta = asind(d/N*sind(temp));
-    
-    theta3 = beta + phi;
+    %beta = asind(d/N*sind(temp));
+    beta = acosd((N^2 + M^2 - d^2)/(2*N*M))
+    theta3 = beta + phi
     
     theta1 = round(gr1*theta1)
     theta2 = round(gr2*(90-theta2))
-    theta3 = round(90 - theta3)
+    theta3 = round(180 - theta3)
     
     
     %% move to angles
