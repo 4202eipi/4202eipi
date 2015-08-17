@@ -1,21 +1,21 @@
 function [] = moveTo(x, y, z, motors)
-    a = 160; % x offset (mm)
-    b = 90; % y offset (mm)
-    c = 75; % z offset (mm)
+    a = 164; % x offset (mm)
+    b = 80; % y offset (mm)
+    c = 82; % z offset (mm)
 
     M = 158; % arm 1 length (mm)
-    N = 90; % arm 2 length (mm)
-    P = 100; % pen length (mm)    
-    alpha = 145; % pen degree constant (degrees)
+    N = 72; % arm 2 length (mm)
+    P = 112; % pen length (mm)    
+    alpha = 135; % pen degree constant (degrees)
 
     gr1 = 7; %gear ratio motorA:arm1
-    gr2 = 4.5; %gear ratio motorB:arm2
+    gr2 = 7; %gear ratio motorB:arm2
 
     N = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
     phi = asind(P*sind(alpha)/N);
     x = 32*x-16; % Convert co-ordinate to mm
     y = 32*y-16; % Convert co-ordinate to mm
-    z = 19*z; % Convert co-ordinate to mm
+    z = 19*z - 45; % Convert co-ordinate to mm
 
     %%KINEMATICS
     if x==a 
@@ -36,38 +36,36 @@ function [] = moveTo(x, y, z, motors)
     beta = asind(d/N*sind(temp));
     
     theta3 = beta + phi;
-
-
+    
     theta1 = round(gr1*theta1)
-    theta2 = round(gr2*(90-theta2+5))
-    theta3 = round(90 - theta3) - 5
+    theta2 = round(gr2*(90-theta2))
+    theta3 = round(90 - theta3)
     
     
     %% move to angles
-    mA = motors(1,1);
-    mB = motors(1,2);
-    mC = motors(1,3);
+    mALeft = motors(1,1);
+    mBDown = motors(1,2);
+    mCDown = motors(1,3);
     
-    data = mA.ReadFromNXT();
+    data = mALeft.ReadFromNXT();
     pos  = data.Position;
-    mA.TachoLimit = theta1;
-    mA.SendToNXT();
-    mA.WaitFor();
-    
-    
-    data = mC.ReadFromNXT();
+    mALeft.TachoLimit = theta1;
+    mALeft.SendToNXT();
+    mALeft.WaitFor();
+ 
+    data = mCDown.ReadFromNXT();
     pos  = data.Position;
-    mC.TachoLimit = theta3;
-    mC.SendToNXT();
-    mC.WaitFor();
+    mCDown.TachoLimit = theta3;
+    mCDown.SendToNXT();
+    mCDown.WaitFor();
     
-    data = mB.ReadFromNXT();
+    data = mBDown.ReadFromNXT();
     pos  = data.Position;
-    mB.TachoLimit = theta2;
-    mB.SendToNXT();
-    mB.WaitFor();
+    mBDown.TachoLimit = theta2;
+    mBDown.SendToNXT();
+    mBDown.WaitFor();
     
-    mA.Stop('off');
-    mB.Stop('off');
-    mC.Stop('off');         
+    mALeft.Stop('off');
+    mBDown.Stop('off');
+    mCDown.Stop('off');         
 end
