@@ -1,10 +1,10 @@
-function [ positions_out ] = sort_positions( positions_in, num_positions )
+function [ positions_out ] = sortPositions( positions_in, num_positions )
     n = num_positions;
     swapped = true;
     while swapped==true
         swapped = false;
         for i=2:n
-            if(get_pan_degree(positions_in(i,:)) < get_pan_degree(positions_in(i-1,:)))
+            if(getPanDegree(positions_in(i,:)) < getPanDegree(positions_in(i-1,:)))
                 temp = positions_in(i,:);
                 positions_in(i,:) = positions_in(i-1,:);
                 positions_in(i-1,:) = temp;

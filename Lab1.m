@@ -13,7 +13,7 @@ targetCount = 1;
 targetLocations = [5 1 0; %%x1 y1 z1
                    3 1 0; %%x2 y2 z2
                    7 4 3] %%x3 y3 z3
-targetLocations = sort_positions(targetLocations, targetCount);
+targetLocations = sortPositions(targetLocations, targetCount);
 targetBlocked = 0;
 
 %%MAIN CODE HERE
