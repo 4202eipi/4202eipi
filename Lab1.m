@@ -67,6 +67,8 @@ mCUp.TachoLimit          = 360;
 mCUp.SmoothStart         = true;
 mCUp.ResetPosition();
 
+angles = [0,0,0];
+
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
     y = targetLocations(targetNumber, 2);
