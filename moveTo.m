@@ -1,16 +1,29 @@
 function [angles_new] = moveTo(x, y, z, angles, motors)
     a = 164; % x offset (mm)
     b = 80; % y offset (mm)
-    c = 82; % z offset (mm)
+    c = 84; % z offset (mm)
 
-    M = 158; % arm 1 length (mm)
+    L = 8;
+    M = 160; % arm 1 length (mm)
     N = 72; % arm 2 length (mm)
-    P = 112; % pen length (mm)    
-    alpha = 135; % pen degree constant (degrees)
+    P = 112; % pen length (mm)
+    alpha = 135; % pen degree constant (degrees) ???
 
     x = 32*x-16; % Convert co-ordinate to mm
     y = 32*y-16; % Convert co-ordinate to mm
-    z = 19*z; % Convert co-ordinate to mm
+    z = 20*z; % Convert co-ordinate to mm
+    
+    if x==a 
+        theta1 = 0;
+    elseif x>a
+        theta1 = atand((y+b)/(x-a)) - 90;
+    else
+        theta1 = 90 - atand((y+b)/(a-x));
+    end
+    
+    % Compensation for position of motor 1
+    y = y-L*cos(theta1);
+    x = x-L*sin(theta1);
 
     O = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
     l = sqrt((y+b)^2+(x-a)^2);
@@ -21,14 +34,6 @@ function [angles_new] = moveTo(x, y, z, angles, motors)
     phi3 = asind(P*sind(alpha)/O);
     beta3 = asind(r*sind(beta2)/O);
     theta3 = phi3 + beta3;
-    
-    if x==a 
-        theta1 = 0;
-    elseif x>a
-        theta1 = atand((y+b)/(x-a)) - 90;
-    else
-        theta1 = 90 - atand((y+b)/(a-x));
-    end
     
     theta3 = theta3 + 5 ;
     
