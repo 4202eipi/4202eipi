@@ -9,7 +9,7 @@ h=COM_OpenNXT();
 COM_SetDefaultNXT(h);
 
 %% TARGET LOCATION STRUCT
-targetCount = 2;
+targetCount = 1;
 targetLocations = restart()
 %prompt = 'what is the target location? ';
 %targetLocations = input(prompt);
@@ -25,7 +25,7 @@ NXT_PlayTone(440, 200, h);
 pause(0.2)
 
 %% SETUP MOTORS
-power = 40;
+power = 20;
 
 mALeft = NXTMotor('A', 'Power', power);
 mBDown = NXTMotor('B', 'Power', -power);
@@ -76,12 +76,12 @@ for targetNumber = 1:targetCount
     mHeight = maxHeight(targetLocations, targetNumber, targetCount) + 1;
     
     % Prevent hitting towers
-    moveTo(x,y,mHeight,motors);
+    angles = moveTo(x,y,mHeight,angles, motors);
     
-    markTarget(x,y,z,motors);
+    %markTarget(x,y,z,anglesmotors);
     
     % Prevent hitting towers
-    moveTo(x,y,mHeight,motors);
+    angles = moveTo(x,y,mHeight,angles, motors);
 end
 
 NXT_PlayTone(440, 200, h);

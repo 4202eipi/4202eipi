@@ -1,4 +1,4 @@
-function [] = moveTo(x, y, z, motors)
+function [] = moveToOld(x, y, z, motors)
     a = 164; % x offset (mm)
     b = 80; % y offset (mm)
     c = 82; % z offset (mm)
@@ -17,14 +17,14 @@ function [] = moveTo(x, y, z, motors)
     z = 19*z; % Convert co-ordinate to mm8
     
     %%KINEMATICS
-    O = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)) % Calculate effective N
-    l = sqrt((y+b)^2+(x-a)^2)
-    r = sqrt(l^2+(z-c)^2)
-    phi2 = atand((z-c)/l)
-    beta2 = acosd((M^2+r^2-O^2)/(2*M*r)) 
-    theta2 = beta2 + phi2
-    phi3 = asind(P*sind(alpha)/O)
-    beta3 = asind(r*sind(beta2)/O)
+    O = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
+    l = sqrt((y+b)^2+(x-a)^2);
+    r = sqrt(l^2+(z-c)^2);
+    phi2 = atand((z-c)/l);
+    beta2 = acosd((M^2+r^2-O^2)/(2*M*r)) ;
+    theta2 = beta2 + phi2;
+    phi3 = asind(P*sind(alpha)/O);
+    beta3 = asind(r*sind(beta2)/O);
     theta3 = phi3 + beta3;
     
     if x==a 
@@ -34,6 +34,8 @@ function [] = moveTo(x, y, z, motors)
     else
         theta1 = - atand((y+b)/(x-a));
     end
+    
+    theta3 = theta3 + 5 ;
     
     theta1 = round(gr1*(theta1))
     theta2 = round(gr2*(90-theta2))
