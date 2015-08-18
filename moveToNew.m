@@ -32,8 +32,6 @@ function [angles] = moveToNew(x, y, z, angles, motors)
     d = sqrt(c^2 + r^2 - 2*c*r*cosd(90-omega));
     
     theta2 = acosd((M^2+d^2-N^2)/(2*M*d));
-    temp = theta2;
-    %beta = asind(d/N*sind(temp));
     beta = acosd((N^2 + M^2 - d^2)/(2*N*M))
     theta3 = beta + phi
     

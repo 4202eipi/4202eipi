@@ -1,4 +1,4 @@
-function [] = markTarget(x, y, z, motors)
+function [] = markTarget(x, y, z, angles, motors)
     %moveTo(x, y, z+1, motors);
-    moveTo(x, y, z, motors);
+    angles = moveToNew(x, y, z, angles, motors);
 end

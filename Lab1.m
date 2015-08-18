@@ -19,8 +19,6 @@ targetLocations
 %                   7 4 3] %%x3 y3 z3
 targetLocations = sortPositions(targetLocations, targetCount);
 
-targetBlocked = 0;
-
 %% MAIN CODE HERE
 NXT_PlayTone(600, 200, h);
 pause(0.2)
@@ -37,7 +35,6 @@ mCDown = NXTMotor('C', 'Power', power);
 mARight = NXTMotor('A', 'Power', -power);
 mBUp = NXTMotor('B', 'Power', power);
 mCUp = NXTMotor('C', 'Power', -power);
-
 
 motors = [mALeft mBDown mCDown; mARight mBUp mCUp];
 
@@ -71,6 +68,8 @@ mCUp.TachoLimit          = 360;
 mCUp.SmoothStart         = true;
 mCUp.ResetPosition();
 
+angles = [0 0 0];
+
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
     y = targetLocations(targetNumber, 2);
@@ -80,11 +79,7 @@ for targetNumber = 1:targetCount
     % Prevent hitting towers
     %moveTo(x,y,maxHeight,motors);
     
-    % Decide if target is blocked
-    if targetBlocked
-        clearTarget(x,y,z,motors);
-    end
-    markTarget(x,y,z,motors);
+    markTarget(x,y,z, angles, motors);
     
     % Prevent hitting towers
     %moveTo(x,y,maxHeight,motors);
