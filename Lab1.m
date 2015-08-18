@@ -1,29 +1,33 @@
-%%SETUP WORKSPACE
+%% SETUP WORKSPACE
 COM_CloseNXT('all')
 close all
 clear all
 clc
 
-%%CONNECT TO NXT
+%% CONNECT TO NXT
 h=COM_OpenNXT();
 COM_SetDefaultNXT(h);
 
-%%TARGET LOCATION STRUCT
+%% TARGET LOCATION STRUCT
 targetCount = 1;
-targetLocations = [5 1 0; %%x1 y1 z1
-                   3 1 0; %%x2 y2 z2
-                   7 4 3] %%x3 y3 z3
+targetLocations = restart()
+targetLocations 
+%prompt = 'what is the target location? ';
+%targetLocations = input(prompt);
+%targetLocations = [1 6 1; %%x1 y1 z1
+%                   3 1 0; %%x2 y2 z2
+%                   7 4 3] %%x3 y3 z3
 targetLocations = sortPositions(targetLocations, targetCount);
 
 targetBlocked = 0;
 
-%%MAIN CODE HERE
+%% MAIN CODE HERE
 NXT_PlayTone(600, 200, h);
 pause(0.2)
 NXT_PlayTone(440, 200, h);
 pause(0.2)
 
-%%SETUP MOTORS
+%% SETUP MOTORS
 power = 20;
 
 mALeft = NXTMotor('A', 'Power', power);
@@ -67,8 +71,6 @@ mCUp.TachoLimit          = 360;
 mCUp.SmoothStart         = true;
 mCUp.ResetPosition();
 
-angles = [0,0,0];
-
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
     y = targetLocations(targetNumber, 2);
@@ -95,7 +97,8 @@ pause(2)
 
 resetArms(motors);
 
-%%CLOSE CONNECTION TO NXT
+
+%% CLOSE CONNECTION TO NXT
 mALeft.Stop('off');
 mBDown.Stop('off');
 mCDown.Stop('off');

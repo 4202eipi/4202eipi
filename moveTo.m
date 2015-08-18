@@ -12,11 +12,11 @@ function [] = moveTo(x, y, z, motors)
     gr2 = 6; %gear ratio motorB:arm2
 
     N = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
-    phi = asind(P*sind(alpha)/N);
+    phi = asind(P*sind(alpha)/N)
+    phi = 28.5
     x = 32*x-16; % Convert co-ordinate to mm
     y = 32*y-16; % Convert co-ordinate to mm
-    z = 19*z - 45; % Convert co-ordinate to mm
-
+    z = 19*z - 45; % Convert co-ordinate to mm8
     %%KINEMATICS
     if x==a 
         theta1 = 0;
@@ -37,7 +37,7 @@ function [] = moveTo(x, y, z, motors)
     beta = acosd((N^2 + M^2 - d^2)/(2*N*M))
     theta3 = beta + phi
     
-    theta1 = round(gr1*theta1)
+    theta1 = round(gr1*(theta1-3))
     theta2 = round(gr2*(90-theta2))
     theta3 = round(180 - theta3)
     
