@@ -8,10 +8,10 @@ function [ ] = moveMotors( angles, motors )
         pos = data.Position;
         if(angles(j)~=0) 
             motors(i,j).TachoLimit = abs(angles(j));
-            motors(i,j).SendToNXT();
-            motors(i,j).WaitFor();
-            motors(i,j).Stop('off');
         end
+        motors(i,j).SendToNXT();
+        motors(i,j).WaitFor();
+        motors(i,j).Stop('off');
     end
 end
 

@@ -1,56 +1,73 @@
-%%SETUP WORKSPACE
+%% SETUP WORKSPACE
 COM_CloseNXT('all')
 close all
 clear all
 clc
 
-%%CONNECT TO NXT
+%% CONNECT TO NXT
 h=COM_OpenNXT();
 COM_SetDefaultNXT(h);
 
-%%TARGET LOCATION STRUCT
-targetCount = 1;
-targetLocations = [2 4 0; %%x1 y1 z1
-                   3 1 0; %%x2 y2 z2
-                   7 4 3] %%x3 y3 z3
+%% TARGET LOCATION STRUCT
+targetCount = 2;
+targetLocations = restart()
+%prompt = 'what is the target location? ';
+%targetLocations = input(prompt);
+%targetLocations = [1 6 1; %%x1 y1 z1
+%                   3 1 0; %%x2 y2 z2
+%                   7 4 3] %%x3 y3 z3
 targetLocations = sortPositions(targetLocations, targetCount);
 
-targetBlocked = 0;
-
-%%MAIN CODE HERE
+%% MAIN CODE HERE
 NXT_PlayTone(600, 200, h);
 pause(0.2)
 NXT_PlayTone(440, 200, h);
 pause(0.2)
 
-%%SETUP MOTORS
-power = 30;
+%% SETUP MOTORS
+power = 40;
 
 mALeft = NXTMotor('A', 'Power', power);
 mBDown = NXTMotor('B', 'Power', -power);
 mCDown = NXTMotor('C', 'Power', power);
 
-mA = NXTMotor('A', 'Power', power);
-mB = NXTMotor('B', 'Power', -power);
-mC = NXTMotor('C', 'Power', power);
+mARight = NXTMotor('A', 'Power', -power);
+mBUp = NXTMotor('B', 'Power', power);
+mCUp = NXTMotor('C', 'Power', -power);
 
+motors = [mALeft mBDown mCDown; mARight mBUp mCUp];
 
-motors = [mA mB mC];
+mALeft.SpeedRegulation     = false;
+mALeft.TachoLimit          = 360;
+mALeft.SmoothStart         = true;
+mALeft.ResetPosition();
 
-mA.SpeedRegulation     = false;
-mA.TachoLimit          = 360;
-mA.SmoothStart         = true;
-mA.ResetPosition();
+mBDown.SpeedRegulation     = false;
+mBDown.TachoLimit          = 360;
+mBDown.SmoothStart         = true;
+mBDown.ResetPosition();
 
-mB.SpeedRegulation     = false;
-mB.TachoLimit          = 360;
-mB.SmoothStart         = true;
-mB.ResetPosition();
+mCDown.SpeedRegulation     = false;
+mCDown.TachoLimit          = 360;
+mCDown.SmoothStart         = true;
+mCDown.ResetPosition();
 
-mC.SpeedRegulation     = false;
-mC.TachoLimit          = 360;
-mC.SmoothStart         = true;
-mC.ResetPosition();
+mARight.SpeedRegulation     = false;
+mARight.TachoLimit          = 360;
+mARight.SmoothStart         = true;
+mARight.ResetPosition();
+
+mBUp.SpeedRegulation     = false;
+mBUp.TachoLimit          = 360;
+mBUp.SmoothStart         = true;
+mBUp.ResetPosition();
+
+mCUp.SpeedRegulation     = false;
+mCUp.TachoLimit          = 360;
+mCUp.SmoothStart         = true;
+mCUp.ResetPosition();
+
+angles = [0 0 0];
 
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
@@ -61,10 +78,6 @@ for targetNumber = 1:targetCount
     % Prevent hitting towers
     %moveTo(x,y,maxHeight,motors);
     
-    % Decide if target is blocked
-    if targetBlocked
-        clearTarget(x,y,z,motors);
-    end
     markTarget(x,y,z,motors);
     
     % Prevent hitting towers
@@ -74,10 +87,13 @@ end
 NXT_PlayTone(440, 200, h);
 pause(0.2)
 NXT_PlayTone(600, 200, h);
-pause(0.2)
+pause(2)
 
-%%CLOSE CONNECTION TO NXT
-mA.Stop('off');
-mB.Stop('off');
-mC.Stop('off');
+resetArms(motors);
+
+
+%% CLOSE CONNECTION TO NXT
+mALeft.Stop('off');
+mBDown.Stop('off');
+mCDown.Stop('off');
 COM_CloseNXT(COM_GetDefaultNXT());
