@@ -11,13 +11,22 @@ function [] = moveTo(x, y, z, motors)
     gr1 = 7; %gear ratio motorA:arm1
     gr2 = 6; %gear ratio motorB:arm2
 
-    N = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
-    phi = asind(P*sind(alpha)/N);
     %phi = 28.5
     x = 32*x-16; % Convert co-ordinate to mm
     y = 32*y-16; % Convert co-ordinate to mm
     z = 19*z; % Convert co-ordinate to mm8
+    
     %%KINEMATICS
+    O = sqrt(N^2 + P^2 - 2*N*P*cosd(alpha)); % Calculate effective N
+    l = sqrt((y+b)^2+(x-a)^2);
+    r = sqrt(l^2+(z-c)^2);
+    phi2 = atand((z-c)/l);
+    beta2 = acosd((M^2+r^2-O^2)/(2*M*r)) ;
+    theta2 = beta2 + phi2;
+    phi3 = asind(P*sind(alpha)/O);
+    beta3 = asind(r*sind(beta2)/O);
+    theta3 = phi3 + beta3;
+    
     if x==a 
         theta1 = 0;
     elseif x < a
@@ -25,19 +34,10 @@ function [] = moveTo(x, y, z, motors)
     else
         theta1 = - atand((y+b)/(x-a));
     end
-
-    l = sqrt((y+b)^2+(x-a)^2);
-    r = sqrt(l^2+z^2);
-    omega = atand(z/l);
-    d = sqrt(c^2 + r^2 - 2*c*r*cosd(90-omega));
     
-    theta2 = acosd((M^2+d^2-N^2)/(2*M*d));
-    temp = theta2;
-    %beta = asind(d/N*sind(temp));
-    beta = acosd((N^2 + M^2 - d^2)/(2*N*M));
-    theta3 = beta + phi;
+    theta3 = theta3 + 5 ;
     
-    theta1 = round(gr1*(theta1-3))
+    theta1 = round(gr1*(theta1))
     theta2 = round(gr2*(90-theta2))
     theta3 = round(180 - theta3)
     
