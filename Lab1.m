@@ -68,6 +68,7 @@ mCUp.SmoothStart         = true;
 mCUp.ResetPosition();
 
 angles = [0 0 0];
+leftRight = 0;
 
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
@@ -76,12 +77,12 @@ for targetNumber = 1:targetCount
     mHeight = maxHeight(targetLocations, targetNumber, targetCount) + 1;
     
     % Prevent hitting towers
-    angles = moveTo(x,y,mHeight,angles, motors);
+    [angles, leftRight] = moveTo(x,y,mHeight,angles, motors, leftRight);
     
     %markTarget(x,y,z,anglesmotors);
     
     % Prevent hitting towers
-    angles = moveTo(x,y,mHeight,angles, motors);
+    [angles, leftRight] = moveTo(x,y,mHeight,angles, motors, leftRight);
 end
 
 NXT_PlayTone(440, 200, h);

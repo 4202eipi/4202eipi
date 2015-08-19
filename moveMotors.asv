@@ -1,5 +1,4 @@
 function [leftRight] = moveMotors( angles, motors, leftRight )
-    motorAGive = 3;
     gr1 = 7; %gear ratio motorA:arm1
     gr2 = 4.5; %gear ratio motorB:arm2
     gr3 = 1; %gear ratio motorC:arm3
@@ -14,13 +13,7 @@ function [leftRight] = moveMotors( angles, motors, leftRight )
         i = 1;
         if angles(j)<0
             i = 2;
-            if (leftRight && (j == 1))
-                angles(j) = angles(j) - motorAGive;
-                leftRight = 0;
-            end
-        elseif ((leftRight == 0) && (j == 1))
-                angles(j) = angles(j) + motorAGive;
-                leftRight = 1;
+            leftRight =   
         end
         
         data = motors(i,j).ReadFromNXT();
