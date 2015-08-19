@@ -9,8 +9,8 @@ h=COM_OpenNXT();
 COM_SetDefaultNXT(h);
 
 %% TARGET LOCATION STRUCT
-targetCount = 1;
-targetLocations = restart()
+targetLocations = restart();
+targetCount = size(targetLocations,1);
 %prompt = 'what is the target location? ';
 %targetLocations = input(prompt);
 %targetLocations = [1 6 1; %%x1 y1 z1
@@ -24,51 +24,14 @@ pause(0.2)
 NXT_PlayTone(440, 200, h);
 pause(0.2)
 
-%% SETUP MOTORS
-power = 20;
+motors = setupMotors(30);
 
-mALeft = NXTMotor('A', 'Power', power);
-mBDown = NXTMotor('B', 'Power', -power);
-mCDown = NXTMotor('C', 'Power', power);
+angles = [0 -58 -20];
+leftRight = 0;
 
-mARight = NXTMotor('A', 'Power', -power);
-mBUp = NXTMotor('B', 'Power', power);
-mCUp = NXTMotor('C', 'Power', -power);
-
-motors = [mALeft mBDown mCDown; mARight mBUp mCUp];
-
-mALeft.SpeedRegulation     = false;
-mALeft.TachoLimit          = 360;
-mALeft.SmoothStart         = true;
-mALeft.ResetPosition();
-
-mBDown.SpeedRegulation     = false;
-mBDown.TachoLimit          = 360;
-mBDown.SmoothStart         = true;
-mBDown.ResetPosition();
-
-mCDown.SpeedRegulation     = false;
-mCDown.TachoLimit          = 360;
-mCDown.SmoothStart         = true;
-mCDown.ResetPosition();
-
-mARight.SpeedRegulation     = false;
-mARight.TachoLimit          = 360;
-mARight.SmoothStart         = true;
-mARight.ResetPosition();
-
-mBUp.SpeedRegulation     = false;
-mBUp.TachoLimit          = 360;
-mBUp.SmoothStart         = true;
-mBUp.ResetPosition();
-
-mCUp.SpeedRegulation     = false;
-mCUp.TachoLimit          = 360;
-mCUp.SmoothStart         = true;
-mCUp.ResetPosition();
+leftRight = moveMotors(-angles, motors, leftRight);
 
 angles = [0 0 0];
-leftRight = 0;
 
 for targetNumber = 1:targetCount
     x = targetLocations(targetNumber, 1);
@@ -79,7 +42,7 @@ for targetNumber = 1:targetCount
     % Prevent hitting towers
     [angles, leftRight] = moveTo(x,y,mHeight,angles, motors, leftRight);
     
-    %markTarget(x,y,z,anglesmotors);
+    [angles, leftRight] = moveTo(x,y,z,angles, motors, leftRight);
     
     % Prevent hitting towers
     [angles, leftRight] = moveTo(x,y,mHeight,angles, motors, leftRight);
@@ -88,13 +51,13 @@ end
 NXT_PlayTone(440, 200, h);
 pause(0.2)
 NXT_PlayTone(600, 200, h);
-pause(2)
+pause(0.2)
 
-resetArms(motors);
+[angles, leftRight] = moveTo(x,y,maxHeight(targetLocations, 1, targetCount)+1, angles, motors, leftRight);
+
+%resetArms(motors);
+moveMotors(-angles, motors, leftRight);
 
 
 %% CLOSE CONNECTION TO NXT
-mALeft.Stop('off');
-mBDown.Stop('off');
-mCDown.Stop('off');
 COM_CloseNXT(COM_GetDefaultNXT());
