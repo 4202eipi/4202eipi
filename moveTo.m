@@ -1,7 +1,7 @@
 function [angles_new, leftRight] = moveTo(x, y, z, angles, motors, leftRight)
     a = 164; % x offset (mm)
-    b = 88; % y offset (mm)
-    c = 83; % z offset (mm)
+    b = 80; % y offset (mm)
+    c = 86.66; % z offset (mm)
 
     L = 8;
     M = 160; % arm 1 length (mm)
