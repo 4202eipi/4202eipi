@@ -7,7 +7,7 @@ function [ ] = moveMotors( angles, motors )
     angles(3) = round(gr3*angles(3));
     order = [1,3,2];
     if (angles(2)<0) || (angles(3)<0)
-        order = [3,2,1];
+        order = [2,3,1];
     end
     for j=order
         i = 1;
