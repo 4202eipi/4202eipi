@@ -35,7 +35,7 @@ function [angles_new] = moveTo(x, y, z, angles, motors)
     beta3 = asind(r*sind(beta2)/O);
     theta3 = phi3 + beta3;
     
-    theta3 = theta3 + 5 ;
+    %theta3 = theta3 + 5 ;
     
     theta2 = 90 - theta2;
     theta3 = 180 - theta3;
