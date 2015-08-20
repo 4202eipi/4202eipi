@@ -31,10 +31,7 @@ pause(0.4)
 
 motors = setupMotors(30);
 
-init_angles = [0 -58 -20];
 leftRight = 1;
-
-%leftRight = moveMotors(-init_angles, motors, leftRight);
 
 angles = [0 0 0];
 
@@ -50,7 +47,7 @@ for q = 1:2
 
         if ((q==1) && (z>0))
             [angles, leftRight] = moveTo(x+0.5,y,z+0.5,angles, motors, leftRight);
-            [angles, leftRight] = moveTo(x-0.5,y,z+0.5,angles, motors, leftRight);
+            %[angles, leftRight] = moveTo(x-0.5,y,z+0.5,angles, motors, leftRight);
             [angles, leftRight] = moveTo(x,y,z+0.5,angles, motors, leftRight);
         end
         [angles, leftRight] = moveTo(x,y,z,angles, motors, leftRight);
@@ -59,6 +56,7 @@ for q = 1:2
         % Prevent hitting towers
         [angles, leftRight] = moveTo(x,y,mHeight,angles, motors, leftRight);
     end
+    [angles, leftRight] = moveTo(x,y,maxHeight(targetLocations, 1, targetCount)+2,angles,motors,leftRight);
 end
 
 NXT_PlayTone(440, 200, h);
@@ -66,13 +64,7 @@ pause(0.2)
 NXT_PlayTone(600, 200, h);
 pause(0.2)
 
-[angles, leftRight] = moveTo(x,y,maxHeight(targetLocations, 1, targetCount)+2, angles, motors, leftRight);
-
-%resetArms(motors);
 moveMotors(-angles, motors, leftRight);
-
-%moveMotors(init_angles, motors, leftRight);
-
 
 %% CLOSE CONNECTION TO NXT
 COM_CloseNXT(COM_GetDefaultNXT());
