@@ -5,8 +5,8 @@ function [angles_new, leftRight] = moveTo(x, y, z, angles, motors, leftRight)
 
     L = 8;
     M = 160; % arm 1 length (mm)
-    N = 24; % arm 2 length (mm)
-    P = 132; % pen length (mm)
+    N = 48; % arm 2 length (mm)
+    P = 115; % pen length (mm)
     alpha = 135; % pen degree constant (degrees) ???
 
     x = 32*x-16; % Convert co-ordinate to mm

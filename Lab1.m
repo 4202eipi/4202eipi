@@ -37,15 +37,15 @@ angles = [0 0 0];
 
 for q = 1:2
     for targetNumber = 1:targetCount
-        x = targetLocations(targetNumber, 1);
-        y = targetLocations(targetNumber, 2);
-        z = targetLocations(targetNumber, 3);
-        mHeight = maxHeight(targetLocations, targetNumber, targetCount) + 2;
+        x = targetLocations(targetNumber, 1)
+        y = targetLocations(targetNumber, 2)
+        z = targetLocations(targetNumber, 3)
+        mHeight = maxHeight(targetLocations, targetNumber, targetCount) + 2
 
         % Prevent hitting towers
         [angles, leftRight] = moveTo(x+0.5,y,mHeight,angles, motors, leftRight);
 
-        if ((q==1) && (z>0))
+        if ((q==1) && (z>0) && (0==1))
             [angles, leftRight] = moveTo(x+0.5,y,z+0.5,angles, motors, leftRight);
             %[angles, leftRight] = moveTo(x-0.5,y,z+0.5,angles, motors, leftRight);
             [angles, leftRight] = moveTo(x,y,z+0.5,angles, motors, leftRight);

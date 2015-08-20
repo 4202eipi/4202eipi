@@ -1,5 +1,5 @@
 function [leftRight] = moveMotors( angles, motors, leftRight )
-    motorAGive = 3;
+    motorAGive = 5;
     gr1 = 7; %gear ratio motorA:arm1
     gr2 = 4.5; %gear ratio motorB:arm2
     gr3 = 20/12; %gear ratio motorC:arm3
@@ -15,7 +15,7 @@ function [leftRight] = moveMotors( angles, motors, leftRight )
             angles(1) = angles(1) - motorAGive;
             leftRight = 0;
         end
-    elseif ((leftRight == 0))
+    elseif ((leftRight == 0) && angles(1)>0)
             angles(1) = angles(1) + motorAGive;
             leftRight = 1;
     end
