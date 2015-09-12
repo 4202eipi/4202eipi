@@ -5,26 +5,40 @@
 clear all;
 info = imaqhwinfo('kinect')
 
-%% Create videoinput Object for Color Stream
+%% Start 
+[colourDevice, depthDevice] = init_kinect();
+
+scene = getsnapshot(colourDevice);
+refImage = imread('fid.jpg');
+refImage = rgb2gray(refImage);
+
+grayScene = rgb2gray(scene);
+grayScene = imrotate((transpose(grayScene)), -90);
+
+[points, refPoints] = detectMarker(grayScene, refImage);
+
+[features1, valid_points1] = extractFeatures(grayScene, points);
+[features2, valid_points2] = extractFeatures(refImage, refPoints);
+
+indexPairs = matchFeatures(features1, features2);
+
+matchedPoints1 = valid_points1(indexPairs(:, 1), :);
+matchedPoints2 = valid_points2(indexPairs(:, 2), :);
+
+figure; showMatchedFeatures(grayScene, refImage, matchedPoints1, matchedPoints2);
 
 
-info.DeviceInfo(1)
-vid = videoinput('kinect', 1, 'RGB_640x480');
+%imshow(grayScene);hold on;
+%plot(valid_points.selectStrongest(4), 'showOrientation', true);
 
-set(vid, 'ReturnedColorSpace', 'gray');
-set(vid, 'Triggerrepeat', Inf);
-vid.FrameGrabInterval = 1;
-vid.FramesPerTrigger = 10;
-figure; % Ensure smooth display
-set(gcf, 'doublebuffer', 'on');
-start(vid)
-while(vid.FramesAcquired<=800)
-    l = getdata(vid, 1);
-    i = edge(l, 'canny', .27);
-    figure(1), imshow(i);
-    flushdata(vid);
-end
-stop(vid)
+
+
+
+
+
+% Close handles
+stop(colourDevice);
+%stop(depthDevice);
 
 
 
