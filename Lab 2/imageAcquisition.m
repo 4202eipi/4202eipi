@@ -3,7 +3,12 @@ clear all
 close all
 vid = videoinput('kinect', 1, 'RGB_640x480');
 src = getselectedsource(vid);
-vid.FramesPerTrigger = 1;
+vid.FramesPerTrigger = 30;
+
+while(vid.FramesAcquired<=500)
+    data = getdata(vid,1); 
+    
+end
 
 for i=1:15
 start(vid)
