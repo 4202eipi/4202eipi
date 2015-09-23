@@ -9,20 +9,30 @@ trainCascadeObjectDetector('detectorBW.xml', positiveInstancesBW, ...
     'FeatureType', 'Haar');
 
 %% Detect hands in video
-clear cam
-cam = webcam(1);
-detectorBW = vision.CascadeObjectDetector('detectorBW.xml');
 
+[colourDevice, depthDevice] = init_kinect();
+vid = colourDevice;
+detectorBW = vision.CascadeObjectDetector('detectorBW.xml');
+%vid.FramesPerTrigger = 30;
+i = 0;
 figure
-while 1
-    I = snapshot(cam);
-    I = imresize(I, 0.5);
-    I = skinDetect2FuncEdited(I);
+while i < 100
+    I = getsnapshot(vid);
+    I = imresize(I, 0.75);
+   
+    if rem(i, 15) == 0
+    tic;
+    I = skin2BW(I);
     I = +I;
     bboxes = step(detectorBW, I);
+    midpoints = euclidean_hands(bboxes);
     I = insertObjectAnnotation(I, 'rectangle', bboxes, 'Hand');
- 
+    detect = toc
     imshow(I);
+    i=0;
+    end
+    
+    i = i + 1;
 end
 
 

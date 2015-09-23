@@ -1,11 +1,10 @@
-clear all
-close all
-cam = webcam(1);
+function colour_calibration()
+cam = colourDevice;
 
 display('Press spacebar to capture image')
 waitforbuttonpress;
 
-image = snapshot(cam);
+image = getsnapshot(cam);
 
 imshow(image)
 
@@ -41,3 +40,4 @@ neutralHSV = [HSV(neutralPixel(1), neutralPixel(2), 1);
 neutralLAB = [LAB(neutralPixel(1), neutralPixel(2), 1);
               LAB(neutralPixel(1), neutralPixel(2), 2);
               LAB(neutralPixel(1), neutralPixel(2), 3)]
+end
