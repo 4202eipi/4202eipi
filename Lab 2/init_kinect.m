@@ -4,6 +4,10 @@ function [colourDevice, depthDevice] = init_kinect( )
 colourDevice = videoinput('kinect', 1);
 depthDevice = videoinput('kinect', 2);
 
+triggerconfig(colourDevice, 'Manual');
+colourDevice.FramesPerTrigger = 1;
+colourDevice.TriggerRepeat = inf; 
+
 start(colourDevice);
 start(depthDevice);
 

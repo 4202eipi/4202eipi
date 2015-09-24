@@ -11,19 +11,30 @@ detector = vision.CascadeObjectDetector('detector.xml');
 
 
 %% Detect hands in video
-clear cam
-cam = webcam(1);
+[colourDevice, depthDevice] = init_kinect();
+vid = colourDevice;
+detector = vision.CascadeObjectDetector('detector.xml');
+isrunning(vid)
 
 figure
 i=0;
 while 1
-    I = snapshot(cam);
+    
+    tic;
+    trigger(vid);
+    isrunning(vid)
+    I = getdata(vid);
+    
+    isrunning(vid)
+    take = toc
     if rem(i,1)==0
         i=0;
         bboxes = step(detector, I);
     end
-    I = insertObjectAnnotation(I, 'rectangle', bboxes, 'Sign');
+    I = insertObjectAnnotation(I, 'rectangle', bboxes, 'Hand');
+    tic;
     imshow(I);
+    show = toc
     i=i+1;
 end
 

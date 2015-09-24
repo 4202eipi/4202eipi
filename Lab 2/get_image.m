@@ -1,6 +1,6 @@
 function [photo, depth] = get_image(cv, dv, num)
 
-calibFilePath = 'C:\Users\Lucas\Documents\4202eipi\Lab 2\RADOCCToolbox';
+calibFilePath = 'C:\Users\Lucas\Documents\4202eipi\Lab 2\RADOCCToolbox\';
 
 if num == 12
     % Save colour images for calibration

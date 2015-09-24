@@ -9,7 +9,7 @@ function out = middle_hands(boxes)
         
        mid_x = boxes(i,1) + boxes(i,3)/2;
        mid_y = boxes(i,2) + boxes(i,4)/2;
-       out(end+1) = [mid_x, mid_y];
+       out = [mid_x, mid_y];
        
     end
 end

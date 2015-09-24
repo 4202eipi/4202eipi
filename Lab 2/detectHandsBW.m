@@ -13,7 +13,6 @@ trainCascadeObjectDetector('detectorBW.xml', positiveInstancesBW, ...
 [colourDevice, depthDevice] = init_kinect();
 vid = colourDevice;
 detectorBW = vision.CascadeObjectDetector('detectorBW.xml');
-%vid.FramesPerTrigger = 30;
 i = 0;
 figure
 while i < 100
@@ -21,13 +20,12 @@ while i < 100
     I = imresize(I, 0.75);
    
     if rem(i, 15) == 0
-    tic;
+    
     I = skin2BW(I);
     I = +I;
     bboxes = step(detectorBW, I);
-    midpoints = euclidean_hands(bboxes);
     I = insertObjectAnnotation(I, 'rectangle', bboxes, 'Hand');
-    detect = toc
+    
     imshow(I);
     i=0;
     end

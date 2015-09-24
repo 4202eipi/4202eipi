@@ -1,4 +1,4 @@
-function sensor_localisation(colourDevice, depthDevice, intrinsics)
+function [ origin ] = sensor_localisation(colourDevice, depthDevice, intrinsics)
 
 %info = imaqhwinfo('kinect')
 
@@ -40,7 +40,7 @@ hold on;
 line(newBoxPolygon(:, 1), newBoxPolygon(:, 2), 'Color', 'y');
 title('Detected Marker');
 
-pixelCoords = transformPointsForward(tform, inlierPoints2.Location) 
+pixelCoords = transformPointsForward(tform, inlierPoints2.Location); 
 pixelCoord = mean(pixelCoords);
 hold on;
 plot(pixelCoord(1),pixelCoord(2),'r.','MarkerSize', 20); % centre of marker
@@ -61,17 +61,28 @@ by = 125; %mm
 w = 640;  % Image width in pixels
 h = 480;  % Image height in pixels
 i = origin(1);j = origin(2);
-z = D(round(i),round(j));
+%z = D(round(i),round(j));  % Depth at origin
+z = D(round(pixelCoord(2)),round(pixelCoord(1))); % Mean depth of origin
 
 x_scale = ax/(newBoxPolygon(2,1) - newBoxPolygon(1,1));
 y_scale = by/(newBoxPolygon(3,2) - newBoxPolygon(2,2));
 
-x_cam = x_scale * xy(1);
-y_cam = y_scale * xy(2);
-z_cam = z;
+y_cam = x_scale * xy(1);
+z_cam = -y_scale * xy(2);
+x_cam = z;
 
-str = sprintf('The location of the camera relative to the baseframe is x = %.fmm y = %.fmm z = %.fmm ', x_cam, y_cam, z_cam);
+yaw = 0; % rotation about x 
+yaw_x = newBoxPolygon(2,1) - newBoxPolygon(1,1);
+yaw_y = newBoxPolygon(2,2) - newBoxPolygon(1,2);
+yaw_angle = tan((yaw_y)/(yaw_y));
+yaw = yaw_angle;
+pitch = 0; % rotation about y 
+roll = 0; % rotation about z
+
+str = sprintf('The location of the camera relative to the baseframe is x = %.fmm, y = %.fmm, z = %.fmm ', x_cam, y_cam, z_cam);
+str1 = sprintf('The post of the camera relative to the baseframe is yaw = %.f degrees, pitch = %.f degrees, roll = %.f degrees', yaw, pitch, roll);
 disp(str);
+disp(str1);
 end
 
 
