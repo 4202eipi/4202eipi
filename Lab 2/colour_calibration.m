@@ -1,7 +1,7 @@
 function colour_calibration(colourDevice)
 cam = colourDevice;
 
-figure;
+preview(cam)
 
 display('Press spacebar to capture image')
 pause;
