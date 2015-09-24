@@ -1,21 +1,25 @@
 function colour_calibration(colourDevice)
 cam = colourDevice;
 
+figure;
+
 display('Press spacebar to capture image')
-waitforbuttonpress;
+pause;
 
 image = getsnapshot(cam);
 
 imshow(image)
 
-display('Please select Light Skin followed by Neutral')
-[y,x] = ginput(2);
+display('Please select Light Skin (#2)')
+[y, x] = ginput(1);
+lightSkinPixel = [int64(x), int64(y)];
+
+display('Please select Neutral (#23)')
+[y, x] = ginput(1);
+neutralPixel = [int64(x), int64(y)];
 
 HSV = rgb2hsv(image);
 LAB = rgb2lab(image);
-
-lightSkinPixel = [int64(x(1)), int64(y(1))];
-neutralPixel = [int64(x(2)), int64(y(2))];
 
 lightSkinRGB = [image(lightSkinPixel(1), lightSkinPixel(2), 1);
                 image(lightSkinPixel(1), lightSkinPixel(2), 2);
