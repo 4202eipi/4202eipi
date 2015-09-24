@@ -1,11 +1,10 @@
-function sensor_localisation(colourDevice, depthDevice)
+function sensor_localisation(colourDevice, depthDevice, intrinsics)
 
-info = imaqhwinfo('kinect')
+%info = imaqhwinfo('kinect')
 
-%% Start 
-%[colourDevice, depthDevice] = init_kinect();
-%%
-scene = getsnapshot(colourDevice);  % Get scene
+scene = getsnapshot(colourDevice);  % Get RGB scene
+D = getsnapshot(depthDevice);D=flipdim(D,2);% Get DEPTH scene
+
 refImage = imread('fid.jpg');       % Get marker
 refImage = rgb2gray(refImage);
 
@@ -47,14 +46,14 @@ hold on;
 plot(pixelCoord(1),pixelCoord(2),'r.','MarkerSize', 20); % centre of marker
 
 %%
-cc = [ 302.955744784712920 ; 242.792195166124090 ];
+cc = intrinsics.cc;
 origin = [newBoxPolygon(4,1), newBoxPolygon(4,2)];
 plot(origin(1),origin(2),'g.','MarkerSize', 20); %origin
 xy = cc - origin'; % xy dist in pixels of camera
 
-figure;
-D = getsnapshot(depthDevice);D=flipdim(D,2);
-imshow(D,[0,9000]);colormap('jet');
+% Show depth image 
+%D = getsnapshot(depthDevice);D=flipdim(D,2);
+figure;imshow(D,[0,9000]);colormap('jet');
 
 ax = 118; %mm     Dimensions of real world marker
 by = 125; %mm
@@ -67,11 +66,12 @@ z = D(round(i),round(j));
 x_scale = ax/(newBoxPolygon(2,1) - newBoxPolygon(1,1));
 y_scale = by/(newBoxPolygon(3,2) - newBoxPolygon(2,2));
 
-x_cam = x_scale * xy(1)
-y_cam = y_scale * xy(2)
-z_cam = z
+x_cam = x_scale * xy(1);
+y_cam = y_scale * xy(2);
+z_cam = z;
 
-
+str = sprintf('The location of the camera relative to the baseframe is x = %.fmm y = %.fmm z = %.fmm ', x_cam, y_cam, z_cam);
+disp(str);
 end
 
 

@@ -1,5 +1,7 @@
-function out = euclidean_hands(boxes)
-    
+function out = middle_hands(boxes)
+    % out returns an array of centre points for each hand that was detected 
+    % boxes is an array bounding boxes of the hands detected
+    % ( boxes = [x y width heigh] )
     numHands = size(boxes, 1);
     out = [];
     
