@@ -20,7 +20,7 @@ function positions = getXYZ(points, depthImage, intrinsics, origin)
             realspace = k_camera\[xPixel*Zdepth; yPixel*Zdepth; Zdepth];
             positions(i, 1) = realspace(1) - cc(1);
             positions(i, 2) = realspace(2) - cc(2);
-            positions(i, 3) = realspace(3) - originDepth;
+            positions(i, 3) = (realspace(3) - originDepth)/4;
         else
             display(sprintf('Bad depth data for hand #%d', i))
         end

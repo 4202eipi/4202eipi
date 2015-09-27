@@ -37,13 +37,13 @@ Nima_valid = 0;
 while (Nima_valid==0),
 
    fprintf(1,'\n');
-   calib_name = input('Basename camera calibration images (without number nor suffix): ','s');
+   calib_name = 'calibphoto';%input('Basename camera calibration images (without number nor suffix): ','s');
    
    format_image = '0';
    
 	while format_image == '0',
    
-   	format_image =  input('Image format: ([]=''r''=''ras'', ''b''=''bmp'', ''t''=''tif'', ''p''=''pgm'', ''j''=''jpg'', ''m''=''ppm'', ''n''=''png'') ','s');
+   	format_image =  'jpg';% input('Image format: ([]=''r''=''ras'', ''b''=''bmp'', ''t''=''tif'', ''p''=''pgm'', ''j''=''jpg'', ''m''=''ppm'', ''n''=''png'') ','s');
 		
 		if isempty(format_image),
    		format_image = 'ras';

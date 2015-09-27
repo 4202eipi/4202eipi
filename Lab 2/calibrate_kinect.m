@@ -2,7 +2,10 @@ function [ intrinsics ] = calibrate_kinect(colourDevice, depthDevice)
 cd('RADOCCToolbox');
 disp('Begin Calibration');
 get_image(colourDevice, depthDevice, 12);
+
 dX = 28; dY = 28;
+
+
 % Run the RADOCCToolkit to determine the intrisic and extrinsic
 % camera calibration data
 ima_read_calib();
