@@ -16,7 +16,7 @@ detectorBW = vision.CascadeObjectDetector('detectorBW.xml');
 i = 0;
 figure
 while i < 100
-    I = getsnapshot(vid);
+    I = getsnapshot(v   id);
     I = imresize(I, 0.75);
    
     if rem(i, 15) == 0
