@@ -13,7 +13,7 @@ end
 for i=1:15
 start(vid)
 sprintf('Capture Image %d', i)
-imwrite(getdata(vid), sprintf('C:\\Users\\Lucas\\Documents\\4202\\toolbox_calib\\TOOLBOX_calib\\image%d.jpg', i));
+imwrite(getdata(vid), sprintf('C:\\Users\\Lucas\\Documents\\4202\\lab3images\\image%d.jpg', i));
 
 end
 
