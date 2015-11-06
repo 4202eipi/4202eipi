@@ -1,8 +1,7 @@
-clear all; close all; clc
-
-pI = [3 3];
-pG = [130 40];
-searchTime = 25; % Seconds
+close all; clc
+pI = [1 1];
+pG = [135 40];
+searchTime = 10; % Seconds
 
 loadedFile = load('layers_ex1.mat');
 testObstacleMap = im2bw(loadedFile.layers);
