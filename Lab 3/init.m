@@ -1,4 +1,4 @@
-%cd C:\Program Files\MATLAB\R2015a\toolbox\matlab\winfun\win64
+cd 'C:\Program Files\MATLAB\R2015a\toolbox\matlab\winfun\win64'
 DEFAULT_PORTNUM = 3;
 DEFAULT_BAUDNUM = 1;
 loadlibrary('dynamixel', 'dynamixel.h');

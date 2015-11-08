@@ -9,7 +9,7 @@ Ds = depthImage;
 sz = size(Ds);
 for i=1:sz(1)
     for j=1:sz(2)
-        if Ds(i,j) > depthLevel || Ds(i,j) == 0
+        if Ds(i,j) >= depthLevel || Ds(i,j) == 0
             Ds(i,j) = 0; 
         else 
            Ds(i,j) = Inf;
