@@ -6,7 +6,7 @@ libfunctions('dynamixel');
 resp = calllib('dynamixel', 'dxl_initialize', DEFAULT_PORTNUM, DEFAULT_BAUDNUM)
 
 id = 1;
-Goal_Pos = 350;     % Position to move to (Goal_pos x 0.29 degrees)(max 1023)
+Goal_Pos = 450;     % Position to move to (Goal_pos x 0.29 degrees)(max 1023)
 Goal_index = 30;    % Index of Command in Library
 Speed_index = 32;    % Index of Command in Library
 
