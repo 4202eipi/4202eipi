@@ -16,13 +16,17 @@ function [path, pathLength, G, nodeTable] = FindOptimalPath(obstacleMap, initial
     % Generate Graph
     tic
     countdown = maxSearchTime;
+    imshow(obstacleMap,'InitialMagnification','fit')
+    hold on
     while toc < maxSearchTime
+        drawnow;
         x = randi([1 xMax]);
         y = randi([1 yMax]);
         if isInCollision(obstacleMap, y, x, xPadding, yPadding) == 0
             if isFarFromExistingNodes(x, y, d, G, nodeTable) == 1
                 G = addnode(G,1);
                 nodeTable = [nodeTable; x y];
+                plot(y, x, '*r')
                 for i = 1:numnodes(G)-1
                     if pdist([nodeTable(i,:); x, y]) <= D
                         % If edge from nodeTable[i] to [x,y] is collision free
