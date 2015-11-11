@@ -2,14 +2,20 @@ function [ theta ] = angleCalculations( x, y, z )
 %ANGLE_CALCULATIONS Calculate the angles the four motors should be pointing at
 % x, y and z should be in mm from the origin
 
-    M = 263; % Arm 1 length in mm
-    N = 263; % Arm 2 length in mm
-    O = 140; % Arm 3 length in mm
-    c = 129+135; % vertical offset in mm
+    M = 115; % Arm 1 length in mm
+    N = 234; % Arm 2 length in mm
+    O = 150; % Arm 3 length in mm
+    c = 128; % vertical offset in mm
     h = 500; % mount of arm's "base"
     
+    M = 270; % Change Arm 1 to current arm 2 plus 36mm
+    N = 190; % Extend Arm 2 by approx 75mm (after swapping with arm 1)
+    O = 200; % Pen arm
+    c = 188; % Extend this by about 60mm (reason being: motor 2 angle)
+    h = 590; % 
+    
     a = 320/2;
-    b = 50;
+    b = 160; % Need to be back 15cm
     
     x = x - a;
     y = y + b;
@@ -18,6 +24,9 @@ function [ theta ] = angleCalculations( x, y, z )
         theta(1) = 90;
     else
         theta(1) = atand(y/x);
+    end
+    if theta(1)<0
+        theta(1) = theta(1) + 180;
     end
     l = sqrt(x^2+y^2);
     P = sqrt(l^2 + (z-h+c)^2);
