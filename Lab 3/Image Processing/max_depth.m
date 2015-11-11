@@ -15,6 +15,7 @@ for i=1:sz(1) %rows
     end
     
 end
+%returns average depth value over entire image
 avg = ceil(mean(mean(Ds)));
 
 

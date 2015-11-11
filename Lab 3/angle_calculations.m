@@ -1,5 +1,5 @@
 function [ theta_1, theta_2, theta_3, theta_4 ] = angle_calculations( x, y, z )
-%MOVETO Calculate the angles the four motors should be pointing at
+%ANGLE_CALCULATIONS Calculate the angles the four motors should be pointing at
 % x, y and z should be in mm from the origin
 
     M = 10; % Arm 1 length in mm

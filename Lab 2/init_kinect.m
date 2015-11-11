@@ -8,7 +8,14 @@ triggerconfig(colourDevice, 'Manual');
 colourDevice.FramesPerTrigger = 1;
 colourDevice.TriggerRepeat = inf; 
 
+triggerconfig(depthDevice, 'Manual');
+depthDevice.FramesPerTrigger = 1;
+depthDevice.TriggerRepeat = inf; 
+
 start(colourDevice);
 start(depthDevice);
+% First trigger takes the most time
+trigger(colourDevice);trigger(depthDevice);
+getdata(colourDevice);getdata(depthDevice);
 
 end
