@@ -12,24 +12,9 @@ Bcrop  = imcrop(B, scene);
 Dcrop = imcrop(D, scene);
 Icrop = imcrop(I, scene);
 
-if scene(3) > scene(4) 
-   pix2mmX = 320/scene(3);
-   pix2mmY = 192/scene(4);
-else 
-   pix2mmY = 320/scene(3);
-   pix2mmX = 192/scene(4);
-end
-
-layers = create_model(cv,dv,scene,Bcrop);
-
-if display
-    figure(1);subplot(3,1,1),
-    h1=imshow(Bcrop,[1000, 1200]); colormap('jet');title('background');
-    subplot(3,1,2);
-    h2=imshow(Dcrop,[1000, 1200]); colormap('jet');title('hand depth');
-    subplot(3,1,3);
-    h3=imshow(Icrop);title('rgb');
-end
+disp('Start - dynamic model building');
+pause;
+[layers depths] = create_model();
 
 
 
