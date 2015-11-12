@@ -22,7 +22,7 @@ function moveMotors( angles )
             % 0 = 150
             % then reverse for new kinematics
             angle = angle + 150;
-            angle = angle + 0;
+            angle = angle + 12;
         end
         if i==3
             % 90 = 150
