@@ -142,5 +142,14 @@ while ishandle(h3)
     set(h,'AlphaData',0.4);
 end
 
-
-
+%%
+h4 = figure;
+set(gcf,'currentchar',' ')         % set a dummy character
+while get(gcf,'currentchar')==' '  % while loop breaks when key is pressed
+    [I, D, B] = get_image(cv, dv, 1);
+    subplot(1,2,1),
+    imshow(D,[1000, 1200]); colormap('jet');title('background');
+    subplot(1,2,2);
+    imshow(I);title('rgb');
+    pause;
+end

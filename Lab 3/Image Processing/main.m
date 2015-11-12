@@ -8,7 +8,7 @@ pause;
 if ~exist('scene','var')
     scene = crop_scene(I);
 end
-Bcrop = imcrop(B, scene);
+Bcrop  = imcrop(B, scene);
 Dcrop = imcrop(D, scene);
 Icrop = imcrop(I, scene);
 
